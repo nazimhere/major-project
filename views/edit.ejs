@@ -1,0 +1,37 @@
+<% layout("/layouts/boiler_plate")%>
+<body>
+    <h3>Edit your list</h3>
+    <form action="/listings/<%=listing._id%>?_method=PUT" method="POST">
+        <div class="mb3">
+            <label for="title" class="form-label">Title</label>
+        <input name="listing[title]" value="<%=listing.title%>" type="text" class="form-control" />
+        <br></div>
+        <div class="mb3">
+             <label for="description" class="form-label">Description</label>
+           <textarea name="listing[descriSption]" class="form-control"><%=listing.description%></textarea>
+        <br>
+        </div>
+        <div class="mb3">
+            <label for="image" class="form-label">Image </label>
+        <input name="listing[image]" value="<%=listing.image%>" type="text" class="form-control"/>
+        <br></div>
+        
+       <div class="mb3">
+        <label for="country" class="form-label">Country</label>
+       <input name="listing[country]" value="<%=listing.country%>" type="text"  class="form-control" />
+       <br></div>
+       <div class="row">
+        <div class="mb3 col-md-4">
+         <label for="price" class="form-label">Price</label>
+       <input name="listing[price]" value="<%=listing.price%>" type="number"  class="form-control" />
+       <br></div>
+       <div class="mb3 col-md-8">
+            <label for="location" class="form-label">Location</label>
+       <input name="listing[location]" value="<%=listing.location%>" class="form-control" />
+       <br></div>
+       </div>
+       
+       <button class="add-btn mt-3 mb-3"><i class="fa-solid fa-pen-to-square"></i>edit </button>
+       <br><br><br>
+    </form>
+</body>
