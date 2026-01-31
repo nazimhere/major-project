@@ -8,10 +8,11 @@ body{
     height: 5rem;
     background-color: aliceblue;
 }
-.cart-flatbed-suitcase{
-    color:aqua !important;
+.fa-cart-flatbed-suitcase{
+    color: gray;
     font-size: 2rem;
 }
+
 .nav-link{
     color:rgb(0, 0, 0) !important;
 }
@@ -28,15 +29,15 @@ body{
     display: flex;
     height: 8rem;
     background-color: bisque;
-    justify-content: center;
+    justify-content: space-evenly;
     flex-wrap: wrap;
     text-align: center;
-    align-items: space-evenly;
+    align-items: center;
 }
 
 .f-info-links{
     width: 100%;
-    font-size: 1.rem;
+    font-size: 1 rem;
 }
 .f-info-social{
     width:100%;
@@ -45,15 +46,24 @@ body{
 }
 .card{
     border: none!important;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
+    background-color: rgb(225, 235, 241)!important;
+    border-radius: 3rem !important;
+}
+.card:hover{
+    background-color: aliceblue !important;
+    opacity: 1;
 }
 .card-img-top{
     border-radius: 1rem;
     width: 100% !important;
     object-fit: cover !important;
+     margin-top: 1%;
+
 }
 .card-body{
-    padding: 0 !important;
+    padding: 1rem!important;
+    
 }
 .card-text p{
     font-weight: 400;
@@ -68,7 +78,7 @@ body{
 }
 .card-img-overlay:hover{
     opacity: 0.1;
-    background-color: aliceblue;
+    background-color: rgb(73, 103, 129);
 }
 .container{
     flex:1;
@@ -76,7 +86,8 @@ body{
 .add-btn{
   background-color: red !important;
   border:none;
- size: 8rem;
+ width: 8rem;
+ height: 8rem;
  border-radius: 25%;
 
 }
@@ -90,7 +101,7 @@ body{
 }
 .navbar-brand{
     size: 18rem !important;
-    font-size: larger;
+    font-size:1.5rem;
 }
 /* Custom Bootstrap Validation Styling */
 .was-validated .form-control:valid {
@@ -106,4 +117,7 @@ body{
 .form-control.is-valid {
     border-color: #198754;
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='m2.3 6.73.73-.73L.73 4.6l.73-.73L3.73 5.27l4.27-4.27.73.73L3.73 6.73z'/%3e%3c/svg%3e");
+}
+.card-img{
+    border-radius: 2% !important;
 }

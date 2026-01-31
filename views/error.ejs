@@ -1,0 +1,13 @@
+<% layout("/layouts/boiler_plate")%>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="alert alert-danger text-center">
+                <h1 class="display-4">Oops!</h1>
+                <p class="lead"><%= error || 'Something went wrong' %></p>
+                <a href="/listings" class="btn btn-primary">Back to Listings</a>
+            </div>
+        </div>
+    </div>
+</div>
