@@ -44,21 +44,22 @@ body{
     font-size: 1.5rem;
     margin-right: 1rem;
 }
-.card{
+.listing-card{
     border: none!important;
     margin-bottom: 1rem;
     background-color: rgb(225, 235, 241)!important;
     border-radius: 3rem !important;
+    border-top: 3rem !important;
 }
 .card:hover{
     background-color: aliceblue !important;
     opacity: 1;
 }
 .card-img-top{
-    border-radius: 1rem;
+    border-radius: 2rem;
     width: 100% !important;
     object-fit: cover !important;
-     margin-top: 1%;
+   
 
 }
 .card-body{
@@ -120,4 +121,18 @@ body{
 }
 .card-img{
     border-radius: 2% !important;
+}
+.btn-dark{
+    color:antiquewhite;
+    background-color: black !important;
+
+}
+.invalid-feedback{
+    color: aqua !important;
+}
+.card{
+   
+    margin-bottom: 1rem;
+    background-color: rgb(225, 235, 241)!important;
+    border-radius: 3rem !important;
 }

@@ -2,9 +2,10 @@
 
 <div class="row mt-4">
     <div class="col-8 offset-2">
-        <h3 class="mb-4">Listing Details</h3>
+        <h3 class="mb-4"><i><b><%= listing.title %></b></i></h3>
         
-        <div class="card show-card mx-auto" style="max-width: 500px;">
+        <!-- Listing Card -->
+        <div class="listing-card show-card mx-auto mb-4" style="max-width: 500px;">
             <img src="<%= listing.image || '/images/default.jpg' %>" 
                  class="card-img-top show-img" 
                  alt="<%= listing.title %>" 
@@ -18,23 +19,18 @@
                 
                 <ul class="list-unstyled">
                     <li class="mb-2"><strong>Description:</strong> <%= listing.description || 'No description' %></li>
-                    <li class="mb-2"><strong>Price:</strong> &#8377;<%= (listing.price || 0).toLocaleString("en-IN") %></li>
+                    <li class="mb-2"><strong>Price:</strong> ₹<%= (listing.price || 0).toLocaleString("en-IN") %></li>
                     <li class="mb-2"><strong>Location:</strong> <%= listing.location || listing.place || 'Not specified' %></li>
                     <li class="mb-2"><strong>Country:</strong> <%= listing.country || 'Not specified' %></li>
                 </ul>
 
                 <div class="btn-group d-flex gap-2 mt-4" role="group">
-                    <!-- ✅ CORRECT VIEW LINK (plural listings) -->
                     <a href="/listings/<%= listing._id %>" class="btn btn-primary">
                         <i class="fa-solid fa-eye me-1"></i>View
                     </a>
-                    
-                    <!-- ✅ CORRECT EDIT LINK (plural listings) -->
                     <a href="/listings/<%= listing._id %>/edit" class="btn btn-warning">
                         <i class="fa-solid fa-pen-to-square me-1"></i>Edit
                     </a>
-                    
-                    <!-- ✅ CORRECT DELETE FORM -->
                     <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE" 
                           style="display: inline;" 
                           onsubmit="return confirm('Are you sure you want to delete this listing?')">
@@ -44,8 +40,40 @@
                     </form>
                 </div>
                 <br>
-                 <a href="/listings" class="btn btn-secondary ms-2 row-cols-md-3">back</a>
+                <a href="/listings" class="btn btn-secondary">Back</a>
             </div>
         </div>
+
+        <!-- Reviews Section - OUTSIDE the card -->
+       <!-- Reviews Section - SAME FORMAT -->
+<div class="card">
+    <div class="card-body">
+        <h4>Leave a Review</h4>
+        <!-- form unchanged -->
+        
+        <hr>
+        <!-- FIXED: Proper header -->
+        <h5>All Reviews</h5>
+        
+        <!-- FIXED: Proper Bootstrap row + closing tags -->
+        <div class="row">
+            <% for(review of listing.reviews) { %>
+                <div class="card col-5 mb-2 ms-5">
+                    <div class="card-body">
+                        <h5 class="card-title">Rahul</h5>
+                        <p class="card-text"><%= review.comment %></p>
+                        <p class="card-text"><%= review.rating %> ⭐</p>
+                    </div>
+                    <!-- FIXED: Delete form position + syntax -->
+                    <form class="mb-3" method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" style="text-align: right; padding: 10px;">
+                        <button class="btn btn-dark btn-sm">Delete</button>
+                    </form>
+                </div>  <!-- ✅ Properly closed -->
+            <% } %>
+        </div>  <!-- ✅ Row closed -->
+    </div>     <!-- ✅ Card-body closed -->
+</div>        <!-- ✅ Main card closed -->
+
     </div>
 </div>
+
