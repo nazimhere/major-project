@@ -49,9 +49,25 @@
 <div class="card">
     <div class="card-body">
         <h4>Leave a Review</h4>
-        <!-- form unchanged -->
-        
-        <hr>
+                <form action="/listings/<%= listing._id %>/reviews" method="post">
+                    <div class="mb-3">
+                        <label for="rating" class="form-label">Rating</label>
+                        <input type="range" min="1" max="5" id="rating"
+                               class="form-control" name="review[rating]" required>
+                    </div>
+                    <hr>
+                    <div class="mb-3">
+                        <label for="comment" class="form-label">Comment</label>
+                        <textarea name="review[comment]" id="comment"
+                                  class="form-control" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-dark">Submit Review</button>  <!-- ✅ Submits form -->
+
+                </form>
+
+
+                <hr>
+</div>
         <!-- FIXED: Proper header -->
         <h5>All Reviews</h5>
         
