@@ -98,6 +98,7 @@ body{
 .show-card{
     padding-left: 0;
     padding-right: 0;
+    
 
 }
 .navbar-brand{
@@ -153,4 +154,7 @@ body{
 .star-rating label:hover,
 .star-rating label:hover ~ label {
     color: #ffd700;
+}
+#navbarSupportedContent{
+    background-color: aliceblue !important;
 }

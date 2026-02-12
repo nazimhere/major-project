@@ -50,6 +50,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 
+
+
 // 2. PASSPORT STRATEGY (before session)
 passport.use(new LocalStrategy({ 
   usernameField: 'username',
