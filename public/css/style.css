@@ -136,3 +136,21 @@ body{
     background-color: rgb(225, 235, 241)!important;
     border-radius: 3rem !important;
 }
+
+.star-rating {
+    display: flex;
+    gap: 2px;
+}
+
+.star-rating input { display: none; }
+.star-rating label {
+    color: #ddd;
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.star-rating input:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: #ffd700;
+}

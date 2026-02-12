@@ -1,0 +1,33 @@
+<% if (typeof error !== 'undefined' && error) { %>
+  <% 
+    let errorArray = [];
+    if (Array.isArray(error)) {
+      errorArray = error;
+    } else if (typeof error === 'string') {
+      errorArray = [error];
+    }
+  %>
+  <% errorArray.forEach(msg => { %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <%= msg %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  <% }); %>
+<% } %>
+
+<% if (typeof success !== 'undefined' && success) { %>
+  <% 
+    let successArray = [];
+    if (Array.isArray(success)) {
+      successArray = success;
+    } else if (typeof success === 'string') {
+      successArray = [success];
+    }
+  %>
+  <% successArray.forEach(msg => { %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <%= msg %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  <% }); %>
+<% } %>
