@@ -376,30 +376,6 @@ app.get('/bookings', isLoggedIn, async (req, res) => {
   }
 });
 
-// CANCEL BOOKING
-app.delete('/bookings/:id', isLoggedIn, async (req, res) => {
-  try {
-    const { id } = req.params;
-    const booking = await Booking.findOne({ 
-      _id: id, 
-      author: req.user._id 
-    }).populate('listing');
-    
-    if (!booking) {
-      req.flash('error', 'Booking not found!');
-      return res.redirect('/bookings');
-    }
-    
-    await Booking.findByIdAndDelete(id);
-    req.flash('success', `✅ Booking for ${booking.listing.title} cancelled!`);
-    res.redirect('/bookings');
-  } catch (err) {
-    console.error(err);
-    req.flash('error', 'Error cancelling booking!');
-    res.redirect('/bookings');
-  }
-});
-
 
 
 //middleware for authorization
@@ -447,7 +423,7 @@ app.post("/login",
   }
 );
 
-app.get("/logout", (req, res, next) => {
+app.post("/logout", (req, res, next) => {
   req.logout((err) => {
     if (err) return next(err);
     req.flash('success', 'See you later!');
