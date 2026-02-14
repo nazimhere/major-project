@@ -41,7 +41,9 @@
 
         <!-- SEARCH BAR -->
     <form class="d-flex search-container mx-3 flex-grow-1" action="/listings" method="GET">
-      <div class="input-group input-group-premium">
+      <a class="navbar-brand fw-bold fs-2 brand-glow me-3" href="/">
+      <i class="fas fa-home me-2 home-icon"></i>
+    </a>  <div class="input-group input-group-premium">
         <span class="input-group-text search-glass">
           <i class="fas fa-search search-icon"></i>
         </span>
@@ -54,9 +56,7 @@
     </form>
 
       
-       <a class="navbar-brand fw-bold fs-2 brand-glow me-3" href="/">
-      <i class="fas fa-home me-2 home-icon"></i>
-    </a>
+       
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto align-items-center">
           <% if (currentUser) { %>
