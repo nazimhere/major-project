@@ -199,3 +199,19 @@ body.bg-gradient {
   .hero-img { height: 300px !important; }
   .social-icon { width: 45px !important; height: 45px !important; }
 }
+
+.reserve-glow 
+{  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: green(10px);
+  font-size: larger;
+  border-radius: 20%;
+  color: green;
+  background-color: rgb(190, 251, 190);
+}
+
+.reserve-glow:hover { 
+ 
+  background-color: greenyellow;
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: var(--shadow-xl) !important;
+ }

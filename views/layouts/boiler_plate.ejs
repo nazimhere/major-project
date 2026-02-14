@@ -15,83 +15,100 @@
 <div class="container-fluid">  <!-- Wrap everything -->
         <h1 class="text-center my-4">Travel innn ✈️</h1>
        
-
-  <!-- PREMIUM GLASS NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top glass-navbar shadow-xl">
-    <div class="container">
-      <a class="navbar-brand fw-bold fs-2 brand-glow" href="/listings">
-        <i class="fa-solid fa-plane-departure" ></i>
-         Travel_innn
-      </a>
-
- 
+<!-- PREMIUM GLASS NAVBAR - USER AT FAR RIGHT -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top glass-navbar shadow-xl pt-4">
+  <div class="container-fluid">
     
-   
-    
-    <!-- THEME TOGGLE -->
+    <!-- 1. BRAND (LEFT) -->
+    <a class="navbar-brand fw-bold fs-2 brand-glow me-3" href="/listings">
+      <i class="fa-solid fa-plane-departure me-2"></i>Travel_innn
+    </a>
 
-      
-      <button class="navbar-toggler border-0 p-2 toggler-glow" type="button" 
-              data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <i class="fas fa-bars fs-4"></i>
-      </button>
-      <!-- PREMIUM NAVBAR WITH SEARCH + HOME -->
+    <!-- 2. TOGGLER -->
+    <button class="navbar-toggler border-0 p-2 toggler-glow" type="button" 
+            data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <i class="fas fa-bars fs-4"></i>
+    </button>
 
-    
-
-        <!-- SEARCH BAR -->
-    <form class="d-flex search-container mx-3 flex-grow-1" action="/listings" method="GET">
-      <a class="navbar-brand fw-bold fs-2 brand-glow me-3" href="/">
-      <i class="fas fa-home me-2 home-icon"></i>
-    </a>  <div class="input-group input-group-premium">
-        <span class="input-group-text search-glass">
-          <i class="fas fa-search search-icon"></i>
-        </span>
-        <input type="text" class="form-control search-input" name="q" placeholder="Search stays in India..." 
-               value="<%= locals.searchQuery || '' %>">
-        <button class="btn btn-warning search-btn" type="submit">
-          <i class="fas fa-arrow-right"></i>
-        </button>
-      </div>
-    </form>
-
-      
-       
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto align-items-center">
-          <% if (currentUser) { %>
-            <li class="nav-item me-3">
-              <a class="btn btn-outline-warning btn-sm px-4 py-2 add-btn-glow" href="/listings/new">
-                <i class="fas fa-plus me-2"></i>Add Listing
-              </a>
-            </li><!-- HOME BUTTON -->
-   
-            <li class="nav-item me-3">
-              <span class="navbar-text fw-medium text-white-50 user-glow">
-                <i class="fas fa-user-circle me-1"></i>Hi, <%= currentUser.username %>
-              </span>
-            </li>
-            <li class="nav-item">
-              <a class="btn btn-warning btn-sm px-4 py-2 logout-glow" href="/logout">
-                <i class="fas fa-sign-out-alt me-2"></i>Logout
-              </a>
-            </li>
-          <% } else { %>
-            <li class="nav-item me-2">
-              <a class="btn btn-outline-light btn-sm px-4 py-2 login-glow" href="/login">
-                <i class="fas fa-sign-in-alt me-2"></i>Login
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="btn btn-warning btn-sm px-4 py-2 signup-glow" href="/signup">
-                <i class="fas fa-user-plus me-2"></i>Sign Up
-              </a>
-            </li>
-          <% } %>
-        </ul>
-      </div>
+    <!-- 3. SEARCH BAR (CENTER - FLEXIBLE WIDTH) -->
+    <div class="flex-grow-1 mx-3">
+      <form class="d-flex search-container" action="/listings" method="GET">
+        <a class="btn btn-outline-light btn-sm me-2 home-glow" href="/">
+          <i class="fas fa-home fs-5"></i>
+        </a>
+        <div class="input-group input-group-premium flex-grow-1">
+          <span class="input-group-text search-glass">
+            <i class="fas fa-search search-icon"></i>
+          </span>
+          <input type="text" class="form-control search-input" name="q" 
+                 placeholder="Search stays in India..." value="<%= locals.searchQuery || '' %>">
+          <button class="btn btn-warning search-btn" type="submit">
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </form>
     </div>
-  </nav>
+
+    <!-- 4. NAVBAR COLLAPSE - NAV ITEMS + USER (RIGHT) -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-center">
+        
+        <!-- NAV LINKS (BEFORE USER) -->
+        <% if (currentUser) { %>
+          <li class="nav-item me-3">
+            <a class="nav-link <%= typeof title !== 'undefined' && title === 'My Bookings' ? 'active' : '' %>" href="/bookings">
+              <i class="fas fa-calendar-check me-1"></i>My Bookings
+            </a>
+          </li>
+          <li class="nav-item me-3">
+            <a class="btn btn-outline-warning btn-sm px-4 py-2 add-btn-glow" href="/listings/new">
+              <i class="fas fa-plus me-2"></i>Add Listing
+            </a>
+          </li>
+        <% } %>
+
+        <!-- USER SECTION - ALWAYS LAST -->
+        <% if (currentUser) { %>
+          <!-- USER DROPDOWN (RIGHTMOST) -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle d-flex align-items-center p-2" href="#" 
+               role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="https://ui-avatars.com/api/?name=<%= currentUser.username %>&background=2563eb&color=fff&size=36&rounded=true" 
+                   class="rounded-circle me-2" width="36" height="36" alt="<%= currentUser.username %>">
+              <span class="d-none d-lg-inline fw-medium"><%= currentUser.username %></span>
+              <span class="d-inline d-lg-none"><i class="fas fa-user"></i></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end shadow-lg">
+              <li><span class="dropdown-item-text px-3 py-2 border-bottom"><strong>Hi, <%= currentUser.username %></strong></span></li>
+              <li><a class="dropdown-item px-3 py-2" href="/listings/new"><i class="fas fa-plus me-2 text-success"></i>Add Listing</a></li>
+              <li><a class="dropdown-item px-3 py-2" href="/bookings"><i class="fas fa-calendar-check me-2 text-primary"></i>My Bookings</a></li>
+              <li><hr class="dropdown-divider mx-2"></li>
+              <li>
+                <form method="POST" action="/logout" class="px-2">
+                  <button class="dropdown-item w-100 text-start" type="submit">
+                    <i class="fas fa-sign-out-alt me-2 text-danger"></i>Logout
+                  </button>
+                </form>
+              </li>
+            </ul>
+          </li>
+        <% } else { %>
+          <!-- GUEST BUTTONS (RIGHTMOST) -->
+          <li class="nav-item me-2">
+            <a class="btn btn-outline-light btn-sm px-4 py-2 login-glow" href="/login">
+              <i class="fas fa-sign-in-alt me-2"></i>Login
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-warning btn-sm px-4 py-2 signup-glow" href="/signup">
+              <i class="fas fa-user-plus me-2"></i>Sign Up
+            </a>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+</nav>
 
   <!-- MAIN CONTENT -->
   <main class="pt-5 pb-5 min-vh-100">

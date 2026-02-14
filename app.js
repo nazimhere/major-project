@@ -1,4 +1,6 @@
 require('dotenv').config();
+const Booking = require('./models/booking');
+
 
 const mongoose = require("mongoose");
 const MONGO_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/travel_in';
@@ -144,15 +146,29 @@ const requireLogin = (req, res, next) => {
   }
   next();
 };
+// ADD THIS MIDDLEWARE - RIGHT AFTER requireLogin
+const isLoggedIn = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  req.flash('error', 'Please login to book this place!');
+  res.redirect('/login');
+};
+
 
 app.get("/listings", async (req, res) => {
   const allListings = await Listing.find({});
   res.render("index", { allListings });
 });
 
+// FIXED NEW LISTING ROUTE
 app.get('/listings/new', requireLogin, (req, res) => {
-  res.render('new');
+  res.render('new', { 
+    title: 'Add New Listing',
+    listing: null  // ✅ Pass null to prevent undefined error
+  });
 });
+
 
 app.get('/listings/:id', wrapAsync(async (req, res) => {
   const { id } = req.params;
@@ -278,6 +294,113 @@ app.post('/signup', async (req, res) => {
     res.redirect('/signup');
   }
 });
+
+
+// BOOKING ROUTES - Add these to your app.js
+// BOOKING ROUTES - CLEAN SINGLE VERSION
+app.get('/bookings/new/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const listing = await Listing.findById(id);
+    if (!listing) {
+      req.flash('error', 'Listing not found!');
+      return res.redirect('/listings');
+    }
+    res.render('bookings/new', { listing, title: 'Book This Place' });
+  } catch (err) {
+    console.error(err);
+    req.flash('error', 'Server error!');
+    res.redirect('/listings');
+  }
+});
+
+app.post('/bookings/:id', isLoggedIn, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { startDate, endDate, guests } = req.body;
+    
+    const listing = await Listing.findById(id);
+    if (!listing) {
+      req.flash('error', 'Listing not found!');
+      return res.redirect('/listings');
+    }
+
+    // ✅ PREVENT DOUBLE BOOKING
+    const existingBooking = await Booking.findOne({
+      listing: id,
+      author: req.user._id,
+      $or: [
+        { startDate: { $lte: new Date(endDate) }, endDate: { $gte: new Date(startDate) } },
+        { startDate: { $lte: new Date(startDate) }, endDate: { $gte: new Date(endDate) } }
+      ]
+    });
+
+    if (existingBooking) {
+      req.flash('error', '❌ You already have a booking for these dates!');
+      return res.redirect(`/listings/${id}`);
+    }
+
+    const newBooking = new Booking({
+      listing: id,
+      author: req.user._id,
+      startDate: new Date(startDate),
+      endDate: new Date(endDate),
+      guests: Number(guests)
+    });
+
+    await newBooking.save();
+    req.flash('success', `🎉 Booking Confirmed! Dates: ${new Date(startDate).toLocaleDateString()} - ${new Date(endDate).toLocaleDateString()} | Guests: ${guests}`);
+    res.redirect(`/listings/${id}`);
+  } catch (err) {
+    console.error(err);
+    req.flash('error', 'Error creating booking!');
+    res.redirect(`/listings/${id}`);
+  }
+});
+
+// MY BOOKINGS - Show user's bookings
+app.get('/bookings', isLoggedIn, async (req, res) => {
+  try {
+    const bookings = await Booking.find({ author: req.user._id })
+      .populate('listing')
+      .sort({ startDate: -1 });
+    
+    res.render('bookings/index', { 
+      bookings, 
+      title: 'My Bookings' 
+    });
+  } catch (err) {
+    console.error(err);
+    req.flash('error', 'Error loading bookings!');
+    res.redirect('/listings');
+  }
+});
+
+// CANCEL BOOKING
+app.delete('/bookings/:id', isLoggedIn, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const booking = await Booking.findOne({ 
+      _id: id, 
+      author: req.user._id 
+    }).populate('listing');
+    
+    if (!booking) {
+      req.flash('error', 'Booking not found!');
+      return res.redirect('/bookings');
+    }
+    
+    await Booking.findByIdAndDelete(id);
+    req.flash('success', `✅ Booking for ${booking.listing.title} cancelled!`);
+    res.redirect('/bookings');
+  } catch (err) {
+    console.error(err);
+    req.flash('error', 'Error cancelling booking!');
+    res.redirect('/bookings');
+  }
+});
+
+
 
 //middleware for authorization
 module.exports.isOwner=async(req,res,next)=>{

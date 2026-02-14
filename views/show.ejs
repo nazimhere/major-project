@@ -17,15 +17,51 @@
                     <%= listing.title %>
                 </h5>
 
-                <ul class="list-unstyled">
+                <ul class="list-unstyled offset-1">
                     <li class="mb-2"><strong>Description:</strong> <%= listing.description || 'No description' %></li>
                     <li class="mb-2"><strong>Price:</strong> ₹<%= (listing.price || 0).toLocaleString("en-IN") %></li>
                     <li class="mb-2"><strong>Location:</strong> <%= listing.location || listing.place || 'Not specified' %></li>
                     <li class="mb-2"><strong>Country:</strong> <%= listing.country || 'Not specified' %></li>
                     <li class="mb-2"><strong>Owner:</strong> <i><%= listing.owner?.username || 'Not specified' %></i></li>
                 </ul>
+               <!-- <div class="reverse  offset-5"> 
+                   <a href="/listings/<%= listing._id %>"> <button type="submit" class=" reserve-glow  btn-sm px-4 py-2">
+                            <i class="fas fa-plus me-2"></i>Reserve
+                        </button></a>
+                </div>-->
+                <!-- BOOK NOW BUTTON - Add to action-buttons section -->
+<!-- SMART BOOK NOW BUTTON -->
+<% const hasBooking = listing.bookings && listing.bookings.some(b => b.author.equals(currentUser?._id)); %>
+<a href="/bookings/new/<%= listing._id %>" 
+   class="btn btn-success btn-lg px-5  offset-4 book-now-glow <%= hasBooking ? 'disabled' : '' %>"
+   <%= hasBooking ? 'onclick="return false;"' : '' %>>
+  <% if (hasBooking) { %>
+    <i class="fas fa-check-circle me-2"></i>Already Booked!
+  <% } else { %>
+    <i class="fas fa-calendar-check me-2"></i>Book Now
+  <% } %>
+</a>
 
-                <div class="btn-group d-flex gap-2 mt-4" role="group">
+<!-- SUCCESS ALERT - Show booking confirmation -->
+<% if (typeof success !== 'undefined' && success.length > 0) { %>
+  <div class="alert alert-success alert-dismissible fade show shadow-lg border-0" role="alert">
+    <i class="fas fa-check-circle me-2"></i>
+    <%= success[0] %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+<% } %>
+
+<% if (typeof error !== 'undefined' && error.length > 0) { %>
+  <div class="alert alert-danger alert-dismissible fade show shadow-lg border-0" role="alert">
+    <i class="fas fa-exclamation-triangle me-2"></i>
+    <%= error[0] %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+<% } %>
+
+
+
+                <div class="btn-group d-flex gap-2 mt-4 offset-0.5 rem" role="group">
                     <a href="/listings/<%= listing._id %>" class="btn btn-primary">
                         <i class="fa-solid fa-eye me-1"></i>View
                     </a>
@@ -44,7 +80,7 @@
                     </form>
                 </div>
 
-                <a href="/listings" class="btn btn-secondary mt-3">Back</a>
+                <a href="/listings" class="btn btn-secondary mt-3 offset-1">Back</a>
                 <br>
             </div>
         </div>
