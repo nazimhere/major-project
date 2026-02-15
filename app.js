@@ -281,6 +281,31 @@ app.post('/signup', async (req, res) => {
       password, 
       username: username || 'Anonymous'
     });
+
+    // CANCEL BOOKING ROUTE - MUST EXIST
+app.delete('/bookings/:id', isLoggedIn, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const booking = await Booking.findOne({ 
+      _id: id, 
+      author: req.user._id 
+    });
+    
+    if (!booking) {
+      req.flash('error', 'Booking not found!');
+      return res.redirect('/bookings');
+    }
+    
+    await Booking.findByIdAndDelete(id);
+    req.flash('success', `✅ Booking cancelled successfully!`);
+    res.redirect('/bookings');
+  } catch (err) {
+    console.error('❌ Cancel error:', err);
+    req.flash('error', 'Error cancelling booking!');
+    res.redirect('/bookings');
+  }
+});
+
     
     await user.save();
     console.log('🎉 USER CREATED SUCCESSFULLY:', user._id);

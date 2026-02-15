@@ -119,11 +119,14 @@
 
                     <!-- ACTION BUTTONS -->
                     <div class="d-grid gap-3">
-                      <button type="submit" class="btn btn-success btn-lg py-4 book-now-hero shadow-lg">
+                      <button type="submit" class="btn btn-success btn-lg py-4 book-now-hero shadow-lg ">
                         <i class="fas fa-lock me-3"></i>
                         <span class="d-inline-block">
                           <span class="fs-4 fw-bold">Confirm & Pay</span>
-                          <br><small class="text-white-50">₹<%= listing.price.toLocaleString() %> total</small>
+                          <br><small class=" "  id="totalPrice">
+                                ₹<%= listing.price.toLocaleString() %> total</small>
+                                
+
                         </span>
                       </button>
                       <a href="/listings/<%= listing._id %>" class="btn btn-outline-secondary btn-lg py-3">
